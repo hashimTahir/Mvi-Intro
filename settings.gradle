@@ -1,0 +1,6 @@
+/*
+ * Copyright (c) 2021/  1/ 30.  Created by Hashim Tahir
+ */
+
+include ':app'
+rootProject.name = "Dictionary App"
