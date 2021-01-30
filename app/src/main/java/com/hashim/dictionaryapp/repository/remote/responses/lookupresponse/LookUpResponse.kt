@@ -2,7 +2,7 @@
  * Copyright (c) 2021/  1/ 31.  Created by Hashim Tahir
  */
 
-package com.hashim.dictionaryapp.network.responses.lookupresponse
+package com.hashim.dictionaryapp.repository.remote.responses.lookupresponse
 
 
 import com.google.gson.annotations.SerializedName
