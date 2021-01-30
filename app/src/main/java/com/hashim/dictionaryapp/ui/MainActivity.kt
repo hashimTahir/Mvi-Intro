@@ -11,14 +11,25 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.hashim.dictionaryapp.R
 import com.hashim.dictionaryapp.databinding.ActivityMainBinding
+import com.hashim.dictionaryapp.repository.remote.RemoteRepo
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var hActivityMainBinding: ActivityMainBinding
 
     private lateinit var hNavHostFragments: NavHostFragment
 
     private lateinit var hNavController: NavController
+
+
+    @Inject
+    lateinit var hRepo: RemoteRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +38,15 @@ class MainActivity : AppCompatActivity() {
 
         hInitNavView()
         hSetupListeners()
+
+        hTestApi()
+    }
+
+    private fun hTestApi() {
+
+        CoroutineScope(IO).launch {
+            hRepo.hGetLanguages()
+        }
     }
 
     private fun hSetupListeners() {

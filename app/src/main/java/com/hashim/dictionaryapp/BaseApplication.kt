@@ -6,9 +6,11 @@ package com.hashim.dictionaryapp
 
 import android.app.Application
 import com.hashim.dictionaryapp.utils.Constants
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
+@HiltAndroidApp
 class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
