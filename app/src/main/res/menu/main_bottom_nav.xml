@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2021/  1/ 30.  Created by Hashim Tahir
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/hDailyWords"
+        android:icon="@drawable/ic_text_format_black_24dp"
+        android:title="@string/daily_word" />
+    <item
+        android:id="@+id/hWordsQuiz"
+        android:icon="@drawable/ic_lightbulb_outline_black_24dp"
+        android:title="@string/daily_quiz" />
+    <item
+        android:id="@+id/hHistory"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="@string/RecentWords" />
+    <item
+        android:id="@+id/hExit"
+        android:icon="@drawable/ic_power_settings_new_black_24dp"
+        android:title="@string/exit" />
+
+</menu>

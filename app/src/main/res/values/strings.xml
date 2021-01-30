@@ -4,4 +4,13 @@
 
 <resources>
     <string name="app_name">Dictionary App</string>
+    <string name="english_to_urdu">English To Urdu</string>
+    <string name="urdu_to_english">Urdu To English</string>
+    <string name="title_home">Home</string>
+    <string name="daily_word">Daily Word</string>
+    <string name="daily_quiz">Daily Quiz</string>
+    <string name="RecentWords">Recent Words</string>
+    <string name="exit">Exit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021/  1/ 30.  Created by Hashim Tahir
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/light_purple" />
+
+
+
+    <corners
+        android:bottomLeftRadius="@dimen/_10dp"
+        android:bottomRightRadius="@dimen/_10dp"
+        android:topLeftRadius="@dimen/_10dp"
+        android:topRightRadius="@dimen/_10dp" />
+</shape>
