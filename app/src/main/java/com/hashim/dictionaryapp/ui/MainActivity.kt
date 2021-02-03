@@ -14,6 +14,8 @@ import com.hashim.dictionaryapp.R
 import com.hashim.dictionaryapp.databinding.ActivityMainBinding
 import com.hashim.dictionaryapp.repository.remote.RemoteRepo
 import com.hashim.dictionaryapp.ui.main.MainViewModel
+import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetLanguagesEvent
+import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetLookUpEvent
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -74,27 +76,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun hTestApi() {
-
-    }
-
     private fun hSetupListeners() {
         hActivityMainBinding.hBottomNav.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.hDailyWords -> {
-                    Timber.d("Daily Words")
+                    hMainViewModel.hSetStateEvent(GetLookUpEvent())
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.hWordsQuiz -> {
-                    Timber.d("hWordsQuiz")
+                    hMainViewModel.hSetStateEvent(GetLanguagesEvent())
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.hHistory -> {
-                    Timber.d("hHistory")
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.hExit -> {
-                    Timber.d("hExit")
                     return@setOnNavigationItemSelectedListener true
                 }
                 else ->
