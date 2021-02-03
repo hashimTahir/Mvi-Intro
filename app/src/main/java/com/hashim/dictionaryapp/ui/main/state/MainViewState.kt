@@ -11,7 +11,7 @@ import com.hashim.dictionaryapp.repository.remote.responses.lookupresponse.LookU
 /*Whatever is required in the view is packaged togater in a single classs.
 * it holds all the data objects in view.*/
 data class MainViewState(
-    val hLangRes: LangRes?= null,
-    val hLookUpResponse: LookUpResponse?= null,
+    var hLangRes: LangRes?= null,
+    var hLookUpResponse: LookUpResponse?= null,
 
-)
+    )

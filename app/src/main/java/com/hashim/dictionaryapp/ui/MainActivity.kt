@@ -6,16 +6,15 @@ package com.hashim.dictionaryapp.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.hashim.dictionaryapp.R
 import com.hashim.dictionaryapp.databinding.ActivityMainBinding
 import com.hashim.dictionaryapp.repository.remote.RemoteRepo
+import com.hashim.dictionaryapp.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var hNavController: NavController
 
+    lateinit var hMainViewModel: MainViewModel
+
 
     @Inject
     lateinit var hRepo: RemoteRepo
@@ -36,17 +37,45 @@ class MainActivity : AppCompatActivity() {
         hActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(hActivityMainBinding.root)
 
+        hMainViewModel = ViewModelProvider(this)
+            .get(MainViewModel::class.java)
+
         hInitNavView()
         hSetupListeners()
 
-        hTestApi()
+        hSubscribeObserver()
+
+    }
+
+    private fun hSubscribeObserver() {
+        /*Data comming in from the repository*/
+        hMainViewModel.hDataState.observe(this) { mainViewState ->
+            Timber.d("DataState is ${mainViewState}")
+            mainViewState.hLangRes?.let {
+//                Data here
+
+                hMainViewModel.hSetLangData(it)
+            }
+            mainViewState.hLookUpResponse?.let {
+                //                Data here
+                hMainViewModel.hSetLookUpData(it)
+            }
+        }
+
+        hMainViewModel.hMainViewState.observe(this) { mainViewState ->
+            mainViewState.hLookUpResponse?.let {
+                Timber.d("Setting the Data to the view")
+            }
+
+            mainViewState.hLangRes?.let {
+                Timber.d("Setting the Data to the view")
+            }
+
+        }
     }
 
     private fun hTestApi() {
 
-        CoroutineScope(IO).launch {
-            hRepo.hGetLanguages()
-        }
     }
 
     private fun hSetupListeners() {
