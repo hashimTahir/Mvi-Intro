@@ -5,10 +5,8 @@
 package com.hashim.dictionaryapp.repository.remote
 
 interface RemoteRepo {
-    suspend fun hGetLanguages()
 
-    suspend fun hGetLookUp(
-        lang: String,
+    suspend fun hSearchWord(
         query: String,
     )
 }

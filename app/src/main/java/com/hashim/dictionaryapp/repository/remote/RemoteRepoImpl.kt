@@ -6,15 +6,11 @@ class RemoteRepoImpl @Inject constructor(
     private val hRetrofitService: RetrofitService,
     private val key: String
 ) : RemoteRepo {
-    override suspend fun hGetLanguages() {
-        hRetrofitService.hGetLanguages(key = key)
-    }
 
-    override suspend fun hGetLookUp(lang: String, query: String) {
-        hRetrofitService.hGetLookUp(
+    override suspend fun hSearchWord(query: String) {
+        hRetrofitService.hSearchWord(
             key = key,
-            lang = lang,
-            query = query
+            wordLookup = query
         )
     }
 
