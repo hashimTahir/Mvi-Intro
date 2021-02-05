@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     private fun hTestApi() {
 
         CoroutineScope(IO).launch {
-            hRepo.hGetLanguages()
+            hRepo.hSearchWord(query = "hello")
         }
     }
 

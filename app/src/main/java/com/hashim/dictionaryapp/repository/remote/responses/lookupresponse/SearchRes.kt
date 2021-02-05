@@ -5,9 +5,4 @@
 package com.hashim.dictionaryapp.repository.remote.responses.lookupresponse
 
 
-import com.google.gson.annotations.SerializedName
-
-data class Def(
-    @SerializedName("sseq")
-    val sseq: List<List<List<Any>>>
-)
+class SearchRes : ArrayList<SearchResItem>()

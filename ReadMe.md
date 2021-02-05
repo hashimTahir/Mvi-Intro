@@ -7,6 +7,7 @@
 ###Technologies Used
 Dagger-Hilt
 Retrofit
-Yandex Dictionary API
+Merriam-Webster's Dictionary Api
+Oxford Dictionary Api
 Coroutines
 Navigation Components
