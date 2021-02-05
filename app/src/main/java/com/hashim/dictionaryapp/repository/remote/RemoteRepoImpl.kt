@@ -1,5 +1,6 @@
 package com.hashim.dictionaryapp.repository.remote
 
+import com.hashim.dictionaryapp.api.RetrofitService
 import javax.inject.Inject
 
 class RemoteRepoImpl @Inject constructor(

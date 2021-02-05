@@ -16,6 +16,9 @@ import com.hashim.dictionaryapp.repository.remote.RemoteRepo
 import com.hashim.dictionaryapp.ui.main.MainViewModel
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetSearchWordEvent
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -45,7 +48,14 @@ class MainActivity : AppCompatActivity() {
         hSetupListeners()
 
         hSubscribeObserver()
+        hTestApi()
+    }
 
+    private fun hTestApi() {
+        CoroutineScope(Dispatchers.IO).launch {
+            Timber.d("Calling thins")
+            hRepo.hSearchWord("Hello")
+        }
     }
 
     private fun hSubscribeObserver() {

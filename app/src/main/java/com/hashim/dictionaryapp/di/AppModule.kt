@@ -8,8 +8,9 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hashim.dictionaryapp.repository.remote.RemoteRepo
 import com.hashim.dictionaryapp.repository.remote.RemoteRepoImpl
-import com.hashim.dictionaryapp.repository.remote.RetrofitService
+import com.hashim.dictionaryapp.api.RetrofitService
 import com.hashim.dictionaryapp.utils.Constants
+import com.hashim.dictionaryapp.utils.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +28,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun hProvidesGson(): Gson? {
+    fun hProvidesGson(): Gson {
         return GsonBuilder()
             .setPrettyPrinting()
             .setLenient()
@@ -37,7 +38,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun hProvidesRetrofitService(gson: Gson?): RetrofitService {
+    fun hProvidesRetrofitService(gson: Gson): RetrofitService {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -45,6 +46,8 @@ object AppModule {
         return Retrofit.Builder()
             .baseUrl(Constants.H_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(LiveDataCallAdapterFactory())
+
             .client(
                 OkHttpClient().newBuilder()
                     .addInterceptor(logging)
