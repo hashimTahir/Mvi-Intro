@@ -7,9 +7,8 @@ package com.hashim.dictionaryapp.ui.main.state
 
 /*State Event are Intent that are fired from View Towards the ViewModel*/
 sealed class MainStateEvent {
-    class GetLanguagesEvent : MainStateEvent()
+    class GetSearchWordEvent : MainStateEvent()
 
-    class GetLookUpEvent : MainStateEvent()
 
     class None : MainStateEvent()
 }

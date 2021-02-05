@@ -8,10 +8,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.hashim.dictionaryapp.repository.remote.responses.lanresponse.LangRes
-import com.hashim.dictionaryapp.repository.remote.responses.lookupresponse.LookUpResponse
+import com.hashim.dictionaryapp.repository.remote.responses.lookupresponse.SearchRes
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent
-import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.*
+import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetSearchWordEvent
+import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.None
 import com.hashim.dictionaryapp.ui.main.state.MainViewState
 import com.hashim.dictionaryapp.utils.AbsentLiveData
 
@@ -38,14 +38,12 @@ class MainViewModel : ViewModel() {
 
     }
 
-   private fun hHandleStateEvent(stateEvent: MainStateEvent): LiveData<MainViewState> {
+    private fun hHandleStateEvent(stateEvent: MainStateEvent): LiveData<MainViewState> {
         when (stateEvent) {
-            is GetLanguagesEvent -> {
+            is GetSearchWordEvent -> {
                 return AbsentLiveData.create()
             }
-            is GetLookUpEvent -> {
-                return AbsentLiveData.create()
-            }
+
             is None -> {
                 return AbsentLiveData.create()
             }
@@ -53,19 +51,13 @@ class MainViewModel : ViewModel() {
     }
 
 
-    fun hSetLookUpData(lookUpResponse: LookUpResponse) {
+    fun hSetSearchResData(searchRes: SearchRes) {
         var hUpdate = hGetCurrentViewStateOrNew()
-        hUpdate.hLookUpResponse = lookUpResponse
+        hUpdate.hSearchRes = searchRes
         _hMainViewState.value = hUpdate
 
     }
 
-    fun hSetLangData(langRes: LangRes) {
-        var hUpdate = hGetCurrentViewStateOrNew()
-        hUpdate.hLangRes = langRes
-        _hMainViewState.value = hUpdate
-
-    }
 
     fun hGetCurrentViewStateOrNew(): MainViewState {
         val hValue = hMainViewState.value?.let {

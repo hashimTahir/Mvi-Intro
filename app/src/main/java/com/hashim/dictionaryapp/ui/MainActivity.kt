@@ -14,8 +14,7 @@ import com.hashim.dictionaryapp.R
 import com.hashim.dictionaryapp.databinding.ActivityMainBinding
 import com.hashim.dictionaryapp.repository.remote.RemoteRepo
 import com.hashim.dictionaryapp.ui.main.MainViewModel
-import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetLanguagesEvent
-import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetLookUpEvent
+import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetSearchWordEvent
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -53,26 +52,18 @@ class MainActivity : AppCompatActivity() {
         /*Data comming in from the repository*/
         hMainViewModel.hDataState.observe(this) { mainViewState ->
             Timber.d("DataState is ${mainViewState}")
-            mainViewState.hLangRes?.let {
+            mainViewState.hSearchRes?.let {
 //                Data here
 
-                hMainViewModel.hSetLangData(it)
+                hMainViewModel.hSetSearchResData(it)
             }
-            mainViewState.hLookUpResponse?.let {
-                //                Data here
-                hMainViewModel.hSetLookUpData(it)
-            }
+
         }
 
         hMainViewModel.hMainViewState.observe(this) { mainViewState ->
-            mainViewState.hLookUpResponse?.let {
+            mainViewState.hSearchRes?.let {
                 Timber.d("Setting the Data to the view")
             }
-
-            mainViewState.hLangRes?.let {
-                Timber.d("Setting the Data to the view")
-            }
-
         }
     }
 
@@ -80,11 +71,11 @@ class MainActivity : AppCompatActivity() {
         hActivityMainBinding.hBottomNav.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.hDailyWords -> {
-                    hMainViewModel.hSetStateEvent(GetLookUpEvent())
+                    hMainViewModel.hSetStateEvent(GetSearchWordEvent())
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.hWordsQuiz -> {
-                    hMainViewModel.hSetStateEvent(GetLanguagesEvent())
+                    hMainViewModel.hSetStateEvent(GetSearchWordEvent())
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.hHistory -> {
