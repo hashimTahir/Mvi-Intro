@@ -8,14 +8,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.hashim.dictionaryapp.repository.remote.RemoteRepo
 import com.hashim.dictionaryapp.repository.remote.responses.lookupresponse.SearchRes
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetSearchWordEvent
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.None
 import com.hashim.dictionaryapp.ui.main.state.MainViewState
 import com.hashim.dictionaryapp.utils.AbsentLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val hRemoteRepo: RemoteRepo
+) : ViewModel() {
 
     /*Events fired from the view by users interactions*/
     private val _hMainStateEvent = MutableLiveData<MainStateEvent>()
@@ -35,6 +43,15 @@ class MainViewModel : ViewModel() {
         }
 
     init {
+        hMakeNetworkRequest()
+    }
+
+    private fun hMakeNetworkRequest() {
+        Timber.d("Making Network request")
+
+        var hSearchWord = hRemoteRepo.hSearchWord("Hello")
+
+        Timber.d("SearchWord $hSearchWord")
 
     }
 

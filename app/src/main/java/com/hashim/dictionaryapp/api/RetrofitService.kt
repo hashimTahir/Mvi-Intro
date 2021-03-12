@@ -15,7 +15,7 @@ interface RetrofitService {
 
 
     @GET("sd3/json/{wordLookup}")
-    suspend fun hSearchWord(
+     fun hSearchWord(
         @Path("wordLookup") wordLookup: String,
         @Query("key") key: String
     ): LiveData<GenericApiRes<SearchRes>>

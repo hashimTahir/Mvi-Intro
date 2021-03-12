@@ -32,10 +32,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var hMainViewModel: MainViewModel
 
-
-    @Inject
-    lateinit var hRepo: RemoteRepo
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -48,15 +44,8 @@ class MainActivity : AppCompatActivity() {
         hSetupListeners()
 
         hSubscribeObserver()
-        hTestApi()
     }
 
-    private fun hTestApi() {
-        CoroutineScope(Dispatchers.IO).launch {
-            Timber.d("Calling thins")
-            hRepo.hSearchWord("Hello")
-        }
-    }
 
     private fun hSubscribeObserver() {
         /*Data comming in from the repository*/
