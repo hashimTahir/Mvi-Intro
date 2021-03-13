@@ -9,7 +9,7 @@ import com.hashim.dictionaryapp.ui.main.state.MainViewState
 
 interface RemoteRepo {
 
-     fun hSearchWord(
+    suspend fun hSearchWord(
         query: String,
     ): LiveData<MainViewState>
 }
