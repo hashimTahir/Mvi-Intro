@@ -44,14 +44,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun hSubscribeObserver() {
         /*Data comming in from the repository*/
-        hMainViewModel.hDataState.observe(this) { mainViewState ->
-            Timber.d("DataState is ${mainViewState}")
-            mainViewState.hSearchRes?.let {
-//                Data here
+        hMainViewModel.hDataState.observe(this) { dataState ->
+            Timber.d("DataState is ${dataState}")
 
-                hMainViewModel.hSetSearchResData(it)
+            dataState.hData?.let { mainViewState ->
+                mainViewState.hSearchRes?.let {
+                    hMainViewModel.hSetSearchResData(it)
+                }
             }
-
         }
 
         hMainViewModel.hMainViewState.observe(this) { mainViewState ->
