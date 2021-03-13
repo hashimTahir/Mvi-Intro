@@ -12,12 +12,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.hashim.dictionaryapp.R
 import com.hashim.dictionaryapp.databinding.ActivityMainBinding
-import com.hashim.dictionaryapp.repository.remote.RemoteRepo
 import com.hashim.dictionaryapp.ui.main.MainViewModel
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetSearchWordEvent
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -28,10 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hNavController: NavController
 
     lateinit var hMainViewModel: MainViewModel
-
-
-    @Inject
-    lateinit var hRepo: RemoteRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,19 +39,19 @@ class MainActivity : AppCompatActivity() {
         hSetupListeners()
 
         hSubscribeObserver()
-
     }
+
 
     private fun hSubscribeObserver() {
         /*Data comming in from the repository*/
-        hMainViewModel.hDataState.observe(this) { mainViewState ->
-            Timber.d("DataState is ${mainViewState}")
-            mainViewState.hSearchRes?.let {
-//                Data here
+        hMainViewModel.hDataState.observe(this) { dataState ->
+            Timber.d("DataState is ${dataState}")
 
-                hMainViewModel.hSetSearchResData(it)
+            dataState.hData?.let { mainViewState ->
+                mainViewState.hSearchRes?.let {
+                    hMainViewModel.hSetSearchResData(it)
+                }
             }
-
         }
 
         hMainViewModel.hMainViewState.observe(this) { mainViewState ->

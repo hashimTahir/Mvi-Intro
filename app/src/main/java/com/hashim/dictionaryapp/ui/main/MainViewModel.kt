@@ -8,14 +8,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.hashim.dictionaryapp.repository.remote.RemoteRepo
 import com.hashim.dictionaryapp.repository.remote.responses.lookupresponse.SearchRes
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetSearchWordEvent
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.None
 import com.hashim.dictionaryapp.ui.main.state.MainViewState
 import com.hashim.dictionaryapp.utils.AbsentLiveData
+import com.hashim.dictionaryapp.utils.DataState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val hRemoteRepo: RemoteRepo
+) : ViewModel() {
 
     /*Events fired from the view by users interactions*/
     private val _hMainStateEvent = MutableLiveData<MainStateEvent>()
@@ -27,21 +35,18 @@ class MainViewModel : ViewModel() {
         get() = _hMainViewState
 
 
-    val hDataState: LiveData<MainViewState> = Transformations
+    val hDataState: LiveData<DataState<MainViewState>> = Transformations
         .switchMap(_hMainStateEvent) {
             it?.let { mainStateEvent ->
                 hHandleStateEvent(mainStateEvent)
             }
         }
 
-    init {
 
-    }
-
-    private fun hHandleStateEvent(stateEvent: MainStateEvent): LiveData<MainViewState> {
+    private fun hHandleStateEvent(stateEvent: MainStateEvent): LiveData<DataState<MainViewState>> {
         when (stateEvent) {
             is GetSearchWordEvent -> {
-                return AbsentLiveData.create()
+                return hRemoteRepo.hSearchWord("Hello")
             }
 
             is None -> {
