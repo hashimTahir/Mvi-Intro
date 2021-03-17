@@ -12,13 +12,15 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.hashim.dictionaryapp.R
 import com.hashim.dictionaryapp.databinding.ActivityMainBinding
+import com.hashim.dictionaryapp.ui.main.DataStateListener
 import com.hashim.dictionaryapp.ui.main.MainViewModel
 import com.hashim.dictionaryapp.ui.main.state.MainStateEvent.GetSearchWordEvent
+import com.hashim.dictionaryapp.utils.DataState
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DataStateListener {
     private lateinit var hActivityMainBinding: ActivityMainBinding
 
     private lateinit var hNavHostFragments: NavHostFragment
@@ -91,6 +93,28 @@ class MainActivity : AppCompatActivity() {
 
         hNavController.setGraph(R.navigation.main_nav)
         NavigationUI.setupWithNavController(hActivityMainBinding.hBottomNav, hNavController)
+    }
+
+    override fun hOnDataStateChanged(dataState: DataState<*>?) {
+        Timber.d("hOnDataStateChanged Listener Called")
+        dataState?.let {
+            hShowProgressBar(it.hLoading)
+            it.hMessage?.let { hShowToast(it) }
+
+        }
+    }
+
+    private fun hShowToast(message: String) {
+
+    }
+
+    private fun hShowProgressBar(isVisible: Boolean) {
+        if (isVisible) {
+
+        } else {
+
+        }
+
     }
 
 }
