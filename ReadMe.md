@@ -7,6 +7,10 @@ Coroutines
 
 ### Architecture
 ## MVI-Model View Intent
+
+![ScreenShot](/image/mvi_data_flow.png)
+
+
 The Model-View-Intent comprises of a Model, View, and Presenter. Intent in this
 architecture doesn’t stand for a component, nor does it refer to the Intent object
 from the Android SDK. Rather, it stands for a desire to perform an action.
