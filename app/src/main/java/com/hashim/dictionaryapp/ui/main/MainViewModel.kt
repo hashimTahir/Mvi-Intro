@@ -46,7 +46,7 @@ class MainViewModel @Inject constructor(
     private fun hHandleStateEvent(stateEvent: MainStateEvent): LiveData<DataState<MainViewState>> {
         when (stateEvent) {
             is GetSearchWordEvent -> {
-                return hRemoteRepo.hSearchWord("Hello")
+                return hRemoteRepo.hSearchWord(stateEvent.wordText)
             }
 
             is None -> {
@@ -57,7 +57,7 @@ class MainViewModel @Inject constructor(
 
 
     fun hSetSearchResData(searchRes: SearchRes) {
-        var hUpdate = hGetCurrentViewStateOrNew()
+        val hUpdate = hGetCurrentViewStateOrNew()
         hUpdate.hSearchRes = searchRes
         _hMainViewState.value = hUpdate
 
@@ -65,9 +65,7 @@ class MainViewModel @Inject constructor(
 
 
     fun hGetCurrentViewStateOrNew(): MainViewState {
-        val hValue = hMainViewState.value?.let {
-            it
-        } ?: MainViewState()
+        val hValue = hMainViewState.value ?: MainViewState()
         return hValue
     }
 

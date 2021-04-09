@@ -10,18 +10,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.hashim.dictionaryapp.databinding.FragmentMainBinding
+import com.hashim.dictionaryapp.ui.main.state.MainStateEvent
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private lateinit var hFragmentMainBinding: FragmentMainBinding
     private lateinit var hDataStateListener: DataStateListener
+    private val hMainViewModel: MainViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?,
+    ): View {
         hFragmentMainBinding = FragmentMainBinding.inflate(
             layoutInflater,
             container,
@@ -32,7 +38,40 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hSetupListeners()
 
+        hSubscribeObservers()
+    }
+
+
+    private fun hSubscribeObservers() {
+        /*Data comming in from the repository*/
+        hMainViewModel.hDataState.observe(viewLifecycleOwner) { dataState ->
+            hDataStateListener.hOnDataStateChanged(dataState)
+
+            dataState.hData?.let { mainViewState ->
+                mainViewState.hSearchRes?.let {
+                    hMainViewModel.hSetSearchResData(it)
+                }
+            }
+        }
+
+        hMainViewModel.hMainViewState.observe(viewLifecycleOwner) { mainViewState ->
+            mainViewState.hSearchRes?.let {
+                hFragmentMainBinding.hMeaningTv.text = it.toString()
+            }
+        }
+    }
+
+
+    private fun hSetupListeners() {
+        hFragmentMainBinding.hMeaningB.setOnClickListener {
+            hMainViewModel.hSetStateEvent(
+                MainStateEvent.GetSearchWordEvent(
+                    hFragmentMainBinding.hEnterWordEt.text.toString()
+                )
+            )
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -44,4 +83,6 @@ class MainFragment : Fragment() {
             Timber.d("$context must implement DataStateListener")
         }
     }
+
+
 }

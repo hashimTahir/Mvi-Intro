@@ -7,8 +7,7 @@ package com.hashim.dictionaryapp.ui.main.state
 
 /*State Event are Intent that are fired from View Towards the ViewModel*/
 sealed class MainStateEvent {
-    class GetSearchWordEvent : MainStateEvent()
-
+    class GetSearchWordEvent(val wordText: String) : MainStateEvent()
 
     class None : MainStateEvent()
 }
