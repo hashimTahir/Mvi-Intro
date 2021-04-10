@@ -58,7 +58,14 @@ class MainFragment : Fragment() {
 
         hMainViewModel.hMainViewState.observe(viewLifecycleOwner) { mainViewState ->
             mainViewState.hSearchRes?.let {
-                hFragmentMainBinding.hMeaningTv.text = it.toString()
+                val hSearch = it.get(0)
+                val hDisplayString = StringBuilder()
+                hDisplayString.append("Word searched:  ${hSearch.meta.id}")
+                    .append("\n")
+                    .append("pronunciation: ${hSearch.hwi.hw}")
+                    .append("\n")
+                    .append("Meaning: ${hSearch.shortdef.get(0)}")
+                hFragmentMainBinding.hMeaningTv.text = hDisplayString.toString()
             }
         }
     }
